@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Plus, Search, Filter, MapPin } from 'lucide-react';
 import { getBookings, deleteBooking } from '../services/bookingService';
 import { bookingKeys } from '../queries/bookingKeys';
 import Card from '../../../components/common/Card';
@@ -255,7 +256,7 @@ const BookingListPage = () => {
           textAlign: 'center',
           gap: '20px'
         }}>
-          <span style={{ fontSize: '64px' }} role="img" aria-label="empty">🗺️</span>
+          <MapPin className="h-12 w-12" style={{ color: 'var(--text)', opacity: 0.4 }} />
           <div>
             <h3 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--text-h)', margin: '0 0 8px 0' }}>No Reservations Found</h3>
             <p style={{ fontSize: '15px', color: 'var(--text)', maxWidth: '400px', margin: '0 auto' }}>
@@ -267,7 +268,7 @@ const BookingListPage = () => {
             className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
             style={{ textDecoration: 'none' }}
           >
-            ➕ Create First Booking
+            <Plus className="h-4 w-4" /> Create First Booking
           </Link>
         </div>
       </div>
@@ -290,7 +291,7 @@ const BookingListPage = () => {
             className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
             style={{ textDecoration: 'none', fontSize: '14px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
-            ➕ New Booking
+            <Plus className="h-4 w-4" /> New Booking
           </Link>
         </div>
       </header>
@@ -298,7 +299,7 @@ const BookingListPage = () => {
       {/* Filters Toolbar */}
       <div style={toolbarStyle}>
         <div style={searchContainerStyle}>
-          <span style={searchIconStyle}>🔍</span>
+          <Search style={searchIconStyle} className="h-4 w-4" />
           <input
             type="text"
             placeholder="Search by destination or customer..."
@@ -309,17 +310,20 @@ const BookingListPage = () => {
           />
         </div>
 
-        <select
-          value={statusFilter}
-          onChange={(e) => handleStatusChange(e.target.value)}
-          style={selectStyle}
-          className="focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-        >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Filter className="h-4 w-4" style={{ color: 'var(--text)', opacity: 0.6, flexShrink: 0 }} />
+          <select
+            value={statusFilter}
+            onChange={(e) => handleStatusChange(e.target.value)}
+            style={selectStyle}
+            className="focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+          >
           <option value="All">All Statuses</option>
           <option value="Confirmed">Confirmed</option>
           <option value="Pending">Pending</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
 
         {(searchTerm || statusFilter !== 'All') && (
           <button
@@ -342,7 +346,7 @@ const BookingListPage = () => {
             gap: '16px',
           }}
         >
-          <span style={{ fontSize: '48px' }} role="img" aria-label="no-results">🔍</span>
+          <Search className="h-12 w-12" style={{ color: 'var(--text)', opacity: 0.4 }} />
           <div>
             <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text-h)', margin: '0 0 4px 0' }}>No Matching Bookings</h3>
             <p style={{ fontSize: '14px', color: 'var(--text)', maxWidth: '360px', margin: '0 auto' }}>

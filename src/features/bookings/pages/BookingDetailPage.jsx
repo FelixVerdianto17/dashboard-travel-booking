@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { ArrowLeft, MapPin, CalendarCheck, Users, CreditCard, Pencil } from 'lucide-react';
 import { getBookingById } from '../services/bookingService';
 import { bookingKeys } from '../queries/bookingKeys';
 import Card from '../../../components/common/Card';
@@ -71,7 +72,7 @@ const BookingDetailPage = () => {
     return (
       <div style={containerStyle}>
         <div>
-          <span style={backLinkStyle}>&larr; Back to Dashboard</span>
+          <span style={backLinkStyle}><ArrowLeft className="h-4 w-4" /> Back to Dashboard</span>
         </div>
         <Skeleton type="detail" />
       </div>
@@ -83,7 +84,7 @@ const BookingDetailPage = () => {
       <div style={containerStyle}>
         <div>
           <Link to="/dashboard" style={backLinkStyle}>
-            &larr; Back to Dashboard
+            <ArrowLeft className="h-4 w-4" /> Back to Dashboard
           </Link>
         </div>
         <Card padding="32px">
@@ -100,7 +101,7 @@ const BookingDetailPage = () => {
     <div style={containerStyle}>
       <div>
         <Link to="/dashboard" style={backLinkStyle}>
-          &larr; Back to Dashboard
+          <ArrowLeft className="h-4 w-4" /> Back to Dashboard
         </Link>
       </div>
 
@@ -125,10 +126,13 @@ const BookingDetailPage = () => {
                   padding: '6px 14px',
                   borderRadius: '8px',
                   transition: 'all 0.2s',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
                 }}
                 className="hover:bg-[var(--accent-bg)]"
               >
-                ✏️ Edit Booking
+                <Pencil className="h-4 w-4" /> Edit Booking
               </Link>
             )}
             <Badge status={booking.status} />
@@ -142,20 +146,28 @@ const BookingDetailPage = () => {
           </div>
           <div style={detailItemStyle}>
             <span style={labelStyle}>Destination</span>
-            <span style={valueStyle}>📍 {booking.destination}</span>
+            <span style={{ ...valueStyle, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <MapPin className="h-4 w-4" style={{ color: 'var(--accent)' }} /> {booking.destination}
+            </span>
           </div>
           <div style={detailItemStyle}>
             <span style={labelStyle}>Travel Dates</span>
-            <span style={valueStyle}>📅 {booking.date}</span>
+            <span style={{ ...valueStyle, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <CalendarCheck className="h-4 w-4" style={{ opacity: 0.6 }} /> {booking.date}
+            </span>
           </div>
           <div style={detailItemStyle}>
-            <span style={labelStyle}>Total Price</span>
+            <span style={{ ...labelStyle, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <CreditCard className="h-3.5 w-3.5" /> Total Price
+            </span>
             <span style={{ ...valueStyle, color: 'var(--accent)', fontWeight: '700', fontSize: '18px' }}>
               {booking.totalPrice}
             </span>
           </div>
           <div style={detailItemStyle}>
-            <span style={labelStyle}>Number of Travelers</span>
+            <span style={{ ...labelStyle, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <Users className="h-3.5 w-3.5" /> Number of Travelers
+            </span>
             <span style={valueStyle}>{booking.travelers} {booking.travelers === 1 ? 'Guest' : 'Guests'}</span>
           </div>
           <div style={detailItemStyle}>

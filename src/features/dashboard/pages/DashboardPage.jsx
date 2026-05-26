@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BookOpen, Plane, CreditCard, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getDashboardSummary } from '../services/dashboardService';
 import Card from '../../../components/common/Card';
@@ -97,28 +98,28 @@ const DashboardPage = () => {
           <>
             <Card padding="24px" borderRadius="12px" className="shadow-sm">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px' }}>📊 Total Bookings</span>
+                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}><BookOpen className="h-4 w-4" /> Total Bookings</span>
                 <span style={{ fontSize: '28px', fontWeight: '700', color: 'var(--text-h)', marginTop: '4px' }}>{summary?.totalBookings}</span>
                 <span style={{ fontSize: '12px', color: 'var(--text)', opacity: 0.8 }}>Registered trips cataloged</span>
               </div>
             </Card>
             <Card padding="24px" borderRadius="12px" className="shadow-sm">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px' }}>✈️ Active Trips</span>
+                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}><Plane className="h-4 w-4" /> Active Trips</span>
                 <span style={{ fontSize: '28px', fontWeight: '700', color: 'var(--accent)', marginTop: '4px' }}>{summary?.activeTrips}</span>
                 <span style={{ fontSize: '12px', color: 'var(--text)', opacity: 0.8 }}>Trips currently in progress</span>
               </div>
             </Card>
             <Card padding="24px" borderRadius="12px" className="shadow-sm">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px' }}>💳 Pending Payments</span>
+                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}><CreditCard className="h-4 w-4" /> Pending Payments</span>
                 <span style={{ fontSize: '28px', fontWeight: '700', color: 'var(--text-h)', marginTop: '4px' }}>{summary?.pendingPayments}</span>
                 <span style={{ fontSize: '12px', color: 'var(--text)', opacity: 0.8 }}>Requires billing resolution</span>
               </div>
             </Card>
             <Card padding="24px" borderRadius="12px" className="shadow-sm">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px' }}>✅ Completed Trips</span>
+                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}><CheckCircle2 className="h-4 w-4" /> Completed Trips</span>
                 <span style={{ fontSize: '28px', fontWeight: '700', color: 'var(--text-h)', marginTop: '4px' }}>{summary?.completedTrips}</span>
                 <span style={{ fontSize: '12px', color: 'var(--text)', opacity: 0.8 }}>Past client journeys completed</span>
               </div>

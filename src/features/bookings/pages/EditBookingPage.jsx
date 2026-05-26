@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { ArrowLeft, Pencil, Loader2, AlertCircle } from 'lucide-react';
 import { getBookingById, updateBooking } from '../services/bookingService';
 import { bookingSchema } from '../schemas/bookingSchema';
 import { bookingKeys } from '../queries/bookingKeys';
@@ -167,7 +168,7 @@ const EditBookingPage = () => {
     return (
       <div style={containerStyle}>
         <header style={headerStyle}>
-          <span style={backLinkStyle}>&larr; Back to Directory</span>
+          <span style={backLinkStyle}><ArrowLeft className="h-4 w-4" /> Back to Directory</span>
           <div style={{ height: '32px', width: '220px', background: 'var(--border)', borderRadius: '6px', marginTop: '12px', marginBottom: '8px' }}></div>
           <div style={{ height: '18px', width: '340px', background: 'var(--border)', borderRadius: '4px' }}></div>
         </header>
@@ -183,7 +184,7 @@ const EditBookingPage = () => {
       <div style={containerStyle}>
         <header style={headerStyle}>
           <Link to="/bookings" style={backLinkStyle}>
-            &larr; Back to Directory
+            <ArrowLeft className="h-4 w-4" /> Back to Directory
           </Link>
         </header>
         <Card padding="32px">
@@ -200,9 +201,11 @@ const EditBookingPage = () => {
     <div style={containerStyle}>
       <header style={headerStyle}>
         <Link to={`/bookings/${bookingId}`} style={backLinkStyle}>
-          &larr; Back to Details
+          <ArrowLeft className="h-4 w-4" /> Back to Details
         </Link>
-        <h1 style={titleStyle}>Edit Reservation Details</h1>
+        <h1 style={{ ...titleStyle, display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Pencil className="h-5 w-5" style={{ color: 'var(--accent)' }} /> Edit Reservation Details
+        </h1>
         <p style={subtitleStyle}>Modify manually created travel reservation records.</p>
       </header>
 
@@ -229,7 +232,9 @@ const EditBookingPage = () => {
                 {...register('customerName')}
               />
               {errors.customerName && (
-                <div style={errorStyle}>⚠️ {errors.customerName.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.customerName.message}
+                </div>
               )}
             </div>
 
@@ -246,7 +251,9 @@ const EditBookingPage = () => {
                 {...register('destination')}
               />
               {errors.destination && (
-                <div style={errorStyle}>⚠️ {errors.destination.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.destination.message}
+                </div>
               )}
             </div>
 
@@ -263,7 +270,9 @@ const EditBookingPage = () => {
                 {...register('date')}
               />
               {errors.date && (
-                <div style={errorStyle}>⚠️ {errors.date.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.date.message}
+                </div>
               )}
             </div>
 
@@ -282,7 +291,9 @@ const EditBookingPage = () => {
                 {...register('totalPrice')}
               />
               {errors.totalPrice && (
-                <div style={errorStyle}>⚠️ {errors.totalPrice.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.totalPrice.message}
+                </div>
               )}
             </div>
 
@@ -300,7 +311,9 @@ const EditBookingPage = () => {
                 {...register('travelers')}
               />
               {errors.travelers && (
-                <div style={errorStyle}>⚠️ {errors.travelers.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.travelers.message}
+                </div>
               )}
             </div>
 
@@ -383,7 +396,7 @@ const EditBookingPage = () => {
             >
               {isSubmitting ? (
                 <>
-                  <span className="animate-spin" aria-hidden="true">🔄</span>
+                  <Loader2 className="h-4 w-4 animate-spin" />
                   Saving Changes...
                 </>
               ) : (

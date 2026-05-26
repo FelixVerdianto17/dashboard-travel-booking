@@ -1,4 +1,5 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Plane, LayoutDashboard, CalendarCheck, Globe, KeyRound, LogOut } from 'lucide-react';
 import useAuthStore from '../store/authStore';
 
 const DashboardLayout = () => {
@@ -35,6 +36,9 @@ const DashboardLayout = () => {
     fontWeight: '700',
     color: 'var(--text-h)',
     textDecoration: 'none',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
   };
 
   const menuStyle = {
@@ -73,7 +77,8 @@ const DashboardLayout = () => {
       <aside style={sidebarStyle}>
         <div>
           <NavLink to="/" style={brandStyle}>
-            <span style={{ color: 'var(--accent)' }}>✈</span> Wanderlust
+            <Plane className="h-5 w-5" style={{ color: 'var(--accent)' }} />
+            Wanderlust
           </NavLink>
           <div style={{ fontSize: '12px', color: 'var(--text)', marginTop: '4px', opacity: 0.8 }}>
             Partner Portal
@@ -84,22 +89,22 @@ const DashboardLayout = () => {
           <ul style={menuStyle}>
             <li>
               <NavLink to="/dashboard" style={linkStyle} className="hover:bg-slate-500/5 hover:text-[var(--text-h)] transition-all duration-200">
-                <span>📊</span> Dashboard
+                <LayoutDashboard className="h-4 w-4" /> Dashboard
               </NavLink>
             </li>
             <li>
               <NavLink to="/bookings" style={linkStyle} className="hover:bg-slate-500/5 hover:text-[var(--text-h)] transition-all duration-200">
-                <span>📋</span> Bookings
+                <CalendarCheck className="h-4 w-4" /> Bookings
               </NavLink>
             </li>
             <li>
               <NavLink to="/" style={linkStyle} className="hover:bg-slate-500/5 hover:text-[var(--text-h)] transition-all duration-200">
-                <span>🏠</span> Public Home
+                <Globe className="h-4 w-4" /> Public Home
               </NavLink>
             </li>
             <li>
               <NavLink to="/login" style={linkStyle} className="hover:bg-slate-500/5 hover:text-[var(--text-h)] transition-all duration-200">
-                <span>🔒</span> Re-Authenticate
+                <KeyRound className="h-4 w-4" /> Re-Authenticate
               </NavLink>
             </li>
           </ul>
@@ -114,7 +119,7 @@ const DashboardLayout = () => {
             onClick={handleLogout}
             className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-semibold rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 hover:border-red-500/30 transition-all duration-200 cursor-pointer"
           >
-            <span>🚪</span> Logout
+            <LogOut className="h-4 w-4" /> Logout
           </button>
         </div>
       </aside>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MapPin, Users, Pencil, Trash2 } from 'lucide-react';
 import Card from '../../../components/common/Card';
 import Badge from '../../../components/common/Badge';
 
@@ -122,8 +123,8 @@ const BookingCard = ({ booking, onDelete }) => {
 
       <div style={contentStyle}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
-          <h3 style={{ fontSize: '19px', fontWeight: '600', color: 'var(--text-h)', margin: 0 }}>
-            📍 {booking.destination}
+          <h3 style={{ fontSize: '19px', fontWeight: '600', color: 'var(--text-h)', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <MapPin className="h-4 w-4" style={{ color: 'var(--accent)', flexShrink: 0 }} /> {booking.destination}
           </h3>
           <span style={{ fontSize: '13px', color: 'var(--text)', fontWeight: '500' }}>
             Booking ID: #{booking.id}
@@ -141,8 +142,8 @@ const BookingCard = ({ booking, onDelete }) => {
           </div>
           <div style={metaItemStyle}>
             <span style={metaLabelStyle}>Travelers</span>
-            <span style={metaValueStyle}>
-              👤 {booking.travelers} {booking.travelers === 1 ? 'Guest' : 'Guests'}
+            <span style={{ ...metaValueStyle, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <Users className="h-4 w-4" style={{ opacity: 0.6 }} /> {booking.travelers} {booking.travelers === 1 ? 'Guest' : 'Guests'}
             </span>
           </div>
           <div style={metaItemStyle}>
@@ -164,7 +165,7 @@ const BookingCard = ({ booking, onDelete }) => {
                   style={editButtonStyle}
                   className="hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/35 transition-all duration-200"
                 >
-                  ✏️ Edit
+                  <Pencil className="h-4 w-4" /> Edit
                 </Link>
                 <button
                   onClick={(e) => {
@@ -175,7 +176,7 @@ const BookingCard = ({ booking, onDelete }) => {
                   style={deleteButtonStyle}
                   className="hover:bg-red-500/20 hover:border-red-500/35 transition-all duration-200"
                 >
-                  🗑️ Delete
+                  <Trash2 className="h-4 w-4" /> Delete
                 </button>
               </>
             )}

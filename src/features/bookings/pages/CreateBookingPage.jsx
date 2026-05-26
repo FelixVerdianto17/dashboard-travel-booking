@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ArrowLeft, Plus, Loader2, AlertCircle } from 'lucide-react';
 import { createBooking } from '../services/bookingService';
 import { bookingSchema } from '../schemas/bookingSchema';
 import { bookingKeys } from '../queries/bookingKeys';
@@ -132,9 +133,11 @@ const CreateBookingPage = () => {
     <div style={containerStyle}>
       <header style={headerStyle}>
         <Link to="/bookings" style={backLinkStyle}>
-          &larr; Back to Directory
+          <ArrowLeft className="h-4 w-4" /> Back to Directory
         </Link>
-        <h1 style={titleStyle}>New Travel Reservation</h1>
+        <h1 style={{ ...titleStyle, display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Plus className="h-5 w-5" style={{ color: 'var(--accent)' }} /> New Travel Reservation
+        </h1>
         <p style={subtitleStyle}>Create a manual booking record for a customer journey.</p>
       </header>
 
@@ -161,7 +164,9 @@ const CreateBookingPage = () => {
                 {...register('customerName')}
               />
               {errors.customerName && (
-                <div style={errorStyle}>⚠️ {errors.customerName.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.customerName.message}
+                </div>
               )}
             </div>
 
@@ -178,7 +183,9 @@ const CreateBookingPage = () => {
                 {...register('destination')}
               />
               {errors.destination && (
-                <div style={errorStyle}>⚠️ {errors.destination.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.destination.message}
+                </div>
               )}
             </div>
 
@@ -195,7 +202,9 @@ const CreateBookingPage = () => {
                 {...register('date')}
               />
               {errors.date && (
-                <div style={errorStyle}>⚠️ {errors.date.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.date.message}
+                </div>
               )}
             </div>
 
@@ -214,7 +223,9 @@ const CreateBookingPage = () => {
                 {...register('totalPrice')}
               />
               {errors.totalPrice && (
-                <div style={errorStyle}>⚠️ {errors.totalPrice.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.totalPrice.message}
+                </div>
               )}
             </div>
 
@@ -232,7 +243,9 @@ const CreateBookingPage = () => {
                 {...register('travelers')}
               />
               {errors.travelers && (
-                <div style={errorStyle}>⚠️ {errors.travelers.message}</div>
+                <div style={errorStyle} className="flex items-center gap-1">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" /> {errors.travelers.message}
+                </div>
               )}
             </div>
 
@@ -315,7 +328,7 @@ const CreateBookingPage = () => {
             >
               {isSubmitting ? (
                 <>
-                  <span className="animate-spin" aria-hidden="true">🔄</span>
+                  <Loader2 className="h-4 w-4 animate-spin" />
                   Saving Booking...
                 </>
               ) : (
