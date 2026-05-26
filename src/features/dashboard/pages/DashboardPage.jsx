@@ -1,77 +1,168 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { getDashboardSummary } from '../services/dashboardService';
+import Card from '../../../components/common/Card';
+import Badge from '../../../components/common/Badge';
+import Alert from '../../../components/common/Alert';
+import Skeleton from '../../../components/common/Skeleton';
 
 const DashboardPage = () => {
+  const [summary, setSummary] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    setError(null);
+    getDashboardSummary()
+      .then((data) => {
+        if (isMounted) {
+          setSummary(data);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching dashboard summary:', err);
+        if (isMounted) {
+          setError('Failed to load dashboard metrics. Please reload the page or try again.');
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const bookings = [
     { id: 1, destination: 'Tokyo, Japan', date: 'Oct 12 - Oct 20', status: 'Confirmed', price: '$1,200', img: 'https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?auto=format&fit=crop&w=300&q=80' },
     { id: 2, destination: 'Paris, France', date: 'Dec 05 - Dec 12', status: 'Pending', price: '$1,850', img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=300&q=80' },
     { id: 3, destination: 'Bali, Indonesia', date: 'Jan 18 - Jan 25', status: 'Confirmed', price: '$950', img: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=300&q=80' },
   ];
 
+  const headerStyle = {
+    marginBottom: '32px',
+  };
+
+  const titleStyle = {
+    fontSize: '28px',
+    fontWeight: '700',
+    color: 'var(--text-h)',
+    margin: '0 0 6px 0',
+  };
+
+  const subtitleStyle = {
+    fontSize: '15px',
+    color: 'var(--text)',
+    margin: 0,
+  };
+
+  const gridStatsStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '20px',
+    marginBottom: '40px',
+  };
+
+  const bookingGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '24px',
+  };
+
+  const imageWrapperStyle = {
+    height: '180px',
+    background: 'var(--border)',
+    position: 'relative',
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-6 md:p-12">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 to-indigo-500 bg-clip-text text-transparent">
-              Travel Dashboard
-            </h1>
-            <p className="text-slate-400">Welcome back, Explorer! Manage your upcoming journeys.</p>
-          </div>
-          <a
-            href="/"
-            className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm font-medium hover:bg-slate-800 transition"
-          >
-            Sign Out
-          </a>
-        </header>
+    <div>
+      <header style={headerStyle}>
+        <h1 style={titleStyle}>Overview & Bookings</h1>
+        <p style={subtitleStyle}>Welcome back, Explorer! Manage your upcoming journeys.</p>
+      </header>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-2">
-            <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider">Total Booked</h3>
-            <p className="text-3xl font-bold">12 Trips</p>
+      <section style={gridStatsStyle}>
+        {error ? (
+          <div className="col-span-full">
+            <Alert 
+              message="Failed to load dashboard metrics"
+              description={error}
+            />
           </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-2">
-            <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider">Active Bookings</h3>
-            <p className="text-3xl font-bold text-sky-400">3 Trips</p>
-          </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-2">
-            <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider">Saved Places</h3>
-            <p className="text-3xl font-bold text-indigo-400">28 Spots</p>
-          </div>
-        </section>
+        ) : isLoading ? (
+          <Skeleton type="stats" count={4} />
+        ) : (
+          <>
+            <Card padding="24px" borderRadius="12px" className="shadow-sm">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px' }}>📊 Total Bookings</span>
+                <span style={{ fontSize: '28px', fontWeight: '700', color: 'var(--text-h)', marginTop: '4px' }}>{summary?.totalBookings}</span>
+                <span style={{ fontSize: '12px', color: 'var(--text)', opacity: 0.8 }}>Registered trips cataloged</span>
+              </div>
+            </Card>
+            <Card padding="24px" borderRadius="12px" className="shadow-sm">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px' }}>✈️ Active Trips</span>
+                <span style={{ fontSize: '28px', fontWeight: '700', color: 'var(--accent)', marginTop: '4px' }}>{summary?.activeTrips}</span>
+                <span style={{ fontSize: '12px', color: 'var(--text)', opacity: 0.8 }}>Trips currently in progress</span>
+              </div>
+            </Card>
+            <Card padding="24px" borderRadius="12px" className="shadow-sm">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px' }}>💳 Pending Payments</span>
+                <span style={{ fontSize: '28px', fontWeight: '700', color: 'var(--text-h)', marginTop: '4px' }}>{summary?.pendingPayments}</span>
+                <span style={{ fontSize: '12px', color: 'var(--text)', opacity: 0.8 }}>Requires billing resolution</span>
+              </div>
+            </Card>
+            <Card padding="24px" borderRadius="12px" className="shadow-sm">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text)', letterSpacing: '0.5px' }}>✅ Completed Trips</span>
+                <span style={{ fontSize: '28px', fontWeight: '700', color: 'var(--text-h)', marginTop: '4px' }}>{summary?.completedTrips}</span>
+                <span style={{ fontSize: '12px', color: 'var(--text)', opacity: 0.8 }}>Past client journeys completed</span>
+              </div>
+            </Card>
+          </>
+        )}
+      </section>
 
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold">Upcoming Bookings</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {bookings.map((booking) => (
-              <div key={booking.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:border-slate-700 transition">
-                <div className="h-48 overflow-hidden relative bg-slate-800">
-                  <img
-                    src={booking.img}
-                    alt={booking.destination}
-                    className="w-full h-full object-cover opacity-80"
-                  />
-                  <span className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full ${
-                    booking.status === 'Confirmed' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                  }`}>
-                    {booking.status}
-                  </span>
+      <section>
+        <h2 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--text-h)', marginBottom: '20px' }}>Upcoming Bookings</h2>
+        <div style={bookingGridStyle}>
+          {bookings.map((booking) => (
+            <Card 
+              key={booking.id} 
+              padding="0px" 
+              borderRadius="12px"
+              hoverable={true}
+              className="group"
+            >
+              <div style={imageWrapperStyle} className="overflow-hidden">
+                <img
+                  src={booking.img}
+                  alt={booking.destination}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+                  className="transition-transform duration-500 group-hover:scale-105"
+                />
+                <Badge status={booking.status} variant="card-overlay" />
+              </div>
+              <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text-h)', margin: '0 0 4px 0' }}>{booking.destination}</h3>
+                  <p style={{ fontSize: '14px', color: 'var(--text)', margin: 0 }}>{booking.date}</p>
                 </div>
-                <div className="p-6 space-y-4">
-                  <div>
-                    <h3 className="text-lg font-bold">{booking.destination}</h3>
-                    <p className="text-slate-400 text-sm">{booking.date}</p>
-                  </div>
-                  <div className="flex justify-between items-center border-t border-slate-800 pt-4">
-                    <span className="text-slate-400 text-sm">Price paid</span>
-                    <span className="font-semibold text-white">{booking.price}</span>
-                  </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)', paddingTop: '12px', marginTop: '4px' }}>
+                  <Link to={`/bookings/${booking.id}`} style={{ fontSize: '14px', color: 'var(--accent)', textDecoration: 'none', fontWeight: '600' }}>
+                    View Details &rarr;
+                  </Link>
+                  <span style={{ fontSize: '16px', fontWeight: '600', color: 'var(--text-h)' }}>{booking.price}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-      </div>
+            </Card>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

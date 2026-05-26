@@ -1,28 +1,93 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+    padding: '40px 20px',
+    textAlign: 'center',
+  };
+
+  const cardStyle = {
+    maxWidth: '500px',
+    width: '100%',
+    padding: '48px 40px',
+    borderRadius: '16px',
+    border: '1px solid var(--border)',
+    background: 'var(--social-bg)',
+    boxShadow: 'var(--shadow)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+    boxSizing: 'border-box',
+  };
+
+  const titleStyle = {
+    fontSize: '36px',
+    fontWeight: '700',
+    color: 'var(--text-h)',
+    margin: 0,
+    letterSpacing: '-1px',
+    lineHeight: '1.2',
+  };
+
+  const textStyle = {
+    fontSize: '16px',
+    lineHeight: '1.6',
+    color: 'var(--text)',
+    margin: 0,
+  };
+
+  const btnPrimaryStyle = {
+    display: 'block',
+    padding: '14px 28px',
+    borderRadius: '8px',
+    background: 'var(--accent)',
+    color: '#fff',
+    textDecoration: 'none',
+    fontWeight: '600',
+    fontSize: '16px',
+    transition: 'opacity 0.2s',
+    border: 'none',
+    cursor: 'pointer',
+  };
+
+  const btnSecondaryStyle = {
+    display: 'block',
+    padding: '14px 28px',
+    borderRadius: '8px',
+    background: 'transparent',
+    color: 'var(--text-h)',
+    textDecoration: 'none',
+    fontWeight: '600',
+    fontSize: '16px',
+    border: '1px solid var(--border)',
+    transition: 'background-color 0.2s',
+    cursor: 'pointer',
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center p-6">
-      <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl text-center space-y-6">
-        <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 to-indigo-500 bg-clip-text text-transparent">
-          Wanderlust
-        </h1>
-        <p className="text-slate-400">
-          Discover and book extraordinary travel experiences around the world.
-        </p>
-        <div className="flex flex-col gap-3">
-          <a
-            href="/login"
-            className="w-full py-3 px-4 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-medium rounded-xl shadow-lg transition duration-200"
-          >
-            Get Started
-          </a>
-          <a
-            href="/dashboard"
-            className="w-full py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium rounded-xl transition duration-200"
-          >
-            View Dashboard Demo
-          </a>
+    <div style={containerStyle}>
+      <div style={cardStyle}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="flex flex-col items-center gap-4">
+          <div className="mb-4 inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-semibold dark:bg-indigo-900/30 dark:text-indigo-300">
+            ✨ Tailwind CSS Active
+          </div>
+          <h1 style={titleStyle}>Elegance in Every Journey</h1>
+          <p style={textStyle}>
+            Explore our handcrafted itineraries, boutique accommodations, and seamless travel booking experiences worldwide.
+          </p>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <Link to="/login" style={btnPrimaryStyle}>
+            Start Planning
+          </Link>
+          <Link to="/dashboard" style={btnSecondaryStyle}>
+            View Dashboard
+          </Link>
         </div>
       </div>
     </div>
