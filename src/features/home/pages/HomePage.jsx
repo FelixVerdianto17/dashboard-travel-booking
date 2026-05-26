@@ -73,9 +73,7 @@ const HomePage = () => {
     <div style={containerStyle}>
       <div style={cardStyle}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="flex flex-col items-center gap-4">
-          <div className="mb-4 inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-semibold dark:bg-indigo-900/30 dark:text-indigo-300">
-            ✨ Tailwind CSS Active
-          </div>
+
           <h1 style={titleStyle}>Elegance in Every Journey</h1>
           <p style={textStyle}>
             Explore our handcrafted itineraries, boutique accommodations, and seamless travel booking experiences worldwide.

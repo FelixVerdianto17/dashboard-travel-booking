@@ -158,9 +158,7 @@ const LoginPage = () => {
     <div style={containerStyle}>
       <div style={cardStyle}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div className="mb-4 inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-semibold dark:bg-indigo-900/30 dark:text-indigo-300">
-            ✨ Tailwind CSS Active
-          </div>
+
           <h2 style={titleStyle}>Welcome Back</h2>
           <p style={subtitleStyle}>Sign in to your Wanderlust account</p>
         </div>

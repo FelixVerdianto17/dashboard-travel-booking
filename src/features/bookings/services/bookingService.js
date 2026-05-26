@@ -36,11 +36,32 @@ const mockBookings = {
 
 const LOCAL_STORAGE_KEY = 'travel-booking-created-bookings';
 
-// Helper to safely fetch local storage custom bookings map
+// Helper to safely fetch local storage custom bookings map.
+// Also normalises legacy entries that were saved before isUserCreated was added:
+// every entry in this store is user-created by definition, so we stamp the flag
+// here rather than requiring a data-migration or a separate script.
 function getLocalBookings() {
   try {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : {};
+    if (!stored) return {};
+
+    const parsed = JSON.parse(stored);
+
+    // Stamp isUserCreated: true on any legacy entry that is missing it
+    let needsSave = false;
+    for (const key of Object.keys(parsed)) {
+      if (!parsed[key].isUserCreated) {
+        parsed[key] = { ...parsed[key], isUserCreated: true };
+        needsSave = true;
+      }
+    }
+
+    // Persist the normalised map so subsequent reads are already clean
+    if (needsSave) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsed));
+    }
+
+    return parsed;
   } catch (e) {
     console.error('Failed to parse locally created bookings:', e);
     return {};
